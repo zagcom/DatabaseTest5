@@ -44,6 +44,20 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Unit")]
+            public string Unit { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Function")]
+            public string Function { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -65,6 +79,9 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Name = user.Name,
+                Unit = user.Unit,
+                Function = user.Function,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -98,6 +115,21 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (Input.Name != user.Name)
+            {
+                user.Name = Input.Name;
+            }
+
+            if (Input.Unit != user.Unit)
+            {
+                user.Unit = Input.Unit;
+            }
+
+            if (Input.Function != user.Function)
+            {
+                user.Function = Input.Function;
+            }
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -108,6 +140,8 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
