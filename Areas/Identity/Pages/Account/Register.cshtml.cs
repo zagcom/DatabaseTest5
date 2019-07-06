@@ -41,6 +41,20 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Full Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Unit")]
+            public string Unit { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Function")]
+            public string Function { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -67,7 +81,7 @@ namespace DatabaseTest5.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new DatabaseTest5User { UserName = Input.Email, Email = Input.Email };
+                var user = new DatabaseTest5User { UserName = Input.Email, Email = Input.Email, Name = Input.Name, Unit = Input.Unit, Function = Input.Function };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
