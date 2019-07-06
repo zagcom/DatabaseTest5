@@ -21,7 +21,9 @@ namespace DatabaseTest5.Areas.Identity
                         context.Configuration.GetConnectionString("DatabaseTest5ContextConnection")));
 
                 services.AddDefaultIdentity<DatabaseTest5User>()
-                    .AddEntityFrameworkStores<DatabaseTest5Context>();
+                    .AddEntityFrameworkStores<DatabaseTest5Context>()
+                    .AddDefaultUI();
+
             });
         }
     }
