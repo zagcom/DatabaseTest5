@@ -90,8 +90,8 @@ namespace DatabaseTest5
                 user = new DatabaseTest5User()
                 {
                    UserName = "admin@zagcom.pl",
-                   Email = "admin@zagcom.pl",
-               };
+                   Email = "admin@zagcom.pl"
+                };
                 await UserManager.CreateAsync(user, "Pa$$w0rd");
             }
             await UserManager.AddToRoleAsync(user, "MasterUser");
