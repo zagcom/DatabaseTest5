@@ -20,7 +20,7 @@ namespace DatabaseTest5.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("DatabaseTest5ContextConnection")));
 
-                services.AddDefaultIdentity<DatabaseTest5User>()
+                services.AddIdentity<DatabaseTest5User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseTest5Context>()
                     .AddDefaultUI();
 
