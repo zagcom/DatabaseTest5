@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseTest5.Areas.Identity.Data;
+using DatabaseTest5.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,11 @@ namespace Identity.Controllers
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
-        public RoleController(RoleManager<IdentityRole> roleMgr)
+        private UserManager<DatabaseTest5User> userManager;
+        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<DatabaseTest5User> userMrg)
         {
             roleManager = roleMgr;
+            userManager = userMrg;
         }
 
         public ViewResult Index() => View(roleManager.Roles);
@@ -49,6 +53,58 @@ namespace Identity.Controllers
             else
                 ModelState.AddModelError("", "No role found");
             return View("Index", roleManager.Roles);
+        }
+
+        public async Task<IActionResult> Update(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            List<DatabaseTest5User> members = new List<DatabaseTest5User>();
+            List<DatabaseTest5User> nonMembers = new List<DatabaseTest5User>();
+            foreach (DatabaseTest5User user in userManager.Users)
+            {
+                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
+                list.Add(user);
+            }
+            return View(new RoleEdit
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(RoleModification model)
+        {
+            IdentityResult result;
+            if (ModelState.IsValid)
+            {
+                foreach (string userId in model.AddIds ?? new string[] { })
+                {
+                    DatabaseTest5User user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        result = await userManager.AddToRoleAsync(user, model.RoleName);
+                        if (!result.Succeeded)
+                            Errors(result);
+                    }
+                }
+                foreach (string userId in model.DeleteIds ?? new string[] { })
+                {
+                    DatabaseTest5User user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+                        if (!result.Succeeded)
+                            Errors(result);
+                    }
+                }
+            }
+
+            if (ModelState.IsValid)
+                return RedirectToAction(nameof(Index));
+            else
+                return await Update(model.RoleId);
         }
 
         private void Errors(IdentityResult result)
