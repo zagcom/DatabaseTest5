@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseTest5.Areas.Identity.Data;
 using DatabaseTest5.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Controllers
 {
+    [Authorize(Roles = "MasterUser")]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
