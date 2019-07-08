@@ -22,7 +22,8 @@ namespace DatabaseTest5.Areas.Identity
 
                 services.AddIdentity<DatabaseTest5User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseTest5Context>()
-                    .AddDefaultUI();
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
 
             });
         }
