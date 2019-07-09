@@ -70,7 +70,7 @@ namespace DatabaseTest5
             //initializing custom roles   
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<DatabaseTest5User>>();
-            string[] roleNames = { "MasterUser", "CanManageCamps", "CanManageComments" };
+            string[] roleNames = { "MasterUser", "CanListCamps", "CanViewCamps", "CanManageCamps", "CanCreateCamps", "CanManageComments" };
             IdentityResult roleResult;
 
             foreach (var roleName in roleNames)
@@ -89,7 +89,7 @@ namespace DatabaseTest5
             {
                 user = new DatabaseTest5User()
                 {
-                   UserName = "admin@zagcom.pl",
+                   UserName = "Administrator",
                    Email = "admin@zagcom.pl"
                 };
                 await UserManager.CreateAsync(user, "Pa$$w0rd");
