@@ -4,14 +4,16 @@ using DatabaseTest5.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseTest5.Migrations
 {
     [DbContext(typeof(DatabaseTest5Context))]
-    partial class DatabaseTest5ContextModelSnapshot : ModelSnapshot
+    [Migration("20190710202423_CreateInitialCampModel")]
+    partial class CreateInitialCampModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

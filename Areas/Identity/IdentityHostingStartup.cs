@@ -16,9 +16,9 @@ namespace DatabaseTest5.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<DatabaseTest5Context>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("DatabaseTest5ContextConnection")));
+                //services.AddDbContext<DatabaseTest5Context>(options =>
+                //    options.UseSqlServer(
+                //        context.Configuration.GetConnectionString("DatabaseTest5ContextConnection")));
 
                 services.AddIdentity<DatabaseTest5User, IdentityRole>()
                     .AddEntityFrameworkStores<DatabaseTest5Context>()

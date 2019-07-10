@@ -34,7 +34,8 @@ namespace DatabaseTest5.TagHelpers
                         names.Add(role.Name);
                 }
             }
-            output.Content.SetContent(names.Count == 0 ? "No Roles" : string.Join(", ", names));
+            output.Content.SetContent(names.Count == 0 ? "No Roles" : string.Join(" | ", names));
+
 
         }
     }

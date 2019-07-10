@@ -6,6 +6,7 @@ using DatabaseTest5.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using DatabaseTest5.Models;
 
 namespace DatabaseTest5.Models
 {
@@ -23,5 +24,7 @@ namespace DatabaseTest5.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<DatabaseTest5.Models.Camp> Camp { get; set; }
     }
 }
